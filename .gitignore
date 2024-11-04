@@ -1,0 +1,162 @@
+#local files
+ssh_info.docx
+thingsToDo.docx
+
+# Python __pycache__ files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django migrations
+*/migrations/*
+!*/migrations/__init__.py
+
+# Django static and media files
+staticfiles/
+media/
+
+# Local Django settings
+local_settings.py
+
+# Environment variables
+.env
+*.env
+
+# Virtual environments
+venv/
+env/
+ENV/
+venv.bak/
+env.bak/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Python egg files
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Coverage reports
+htmlcov/
+.coverage
+.tox/
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Node.js modules
+node_modules/
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+*logs/
+~$*
+
+# Build directories
+build/
+dist/
+tmp/
+temp/
+out/
+
+# Parcel-bundler cache (if you use Parcel)
+.cache/
+
+# Webpack cache
+.webpack/
+
+# Production build (e.g., create-react-app)
+build/
+
+# Dependency directories
+jspm_packages/
+
+# IDE directories
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# MacOS files
+.DS_Store
+
+# Windows files
+Thumbs.db
+ehthumbs.db
+Thumbs.db:encryptable
+ehthumbs_vista.db
+
+# Linux files
+*~
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Service worker directories
+workbox-config.js
+
+# PWA asset cache
+.pnp/
+.pnp.js
+
+# TernJS port file
+.tern-port
+
+# Stylelint cache
+.stylelintcache
+
+# EditorConfig
+.editorconfig
+
+# Prettier
+.prettierignore
+
+# ESLint
+.eslintcache
+
+# Browserslist
+.browserslistrc
+
+# Lint-staged
+.lintstagedrc
+
+# Husky
+.husky/
+
+# Storybook files
+.storybook/
+
+# Additional files (customize as needed)
+*.sqlite3
+*.sqlite
