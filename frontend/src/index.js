@@ -1,17 +1,37 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from 'react-dom';
+import { HelmetProvider } from 'react-helmet-async';
+import { BrowserRouter } from 'react-router-dom';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+import 'nprogress/nprogress.css';
+import App from 'src/App';
+import { SidebarProvider } from 'src/contexts/SidebarContext';
+import * as serviceWorker from 'src/serviceWorker';
+
+import { Provider } from 'react-redux';
+import { thunk } from 'redux-thunk';
+
+import rootReducer from './reducers';
+import { applyMiddleware, compose, createStore } from 'redux';
+
+const store = createStore(
+  rootReducer,
+  compose(
+    applyMiddleware(thunk)
+    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+ReactDOM.render(
+  <HelmetProvider>
+    <SidebarProvider>
+      <BrowserRouter>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </BrowserRouter>
+    </SidebarProvider>
+  </HelmetProvider>,
+  document.getElementById('root')
+);
+
+serviceWorker.unregister();

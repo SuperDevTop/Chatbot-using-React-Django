@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+<p align="center">
+    <a href="https://bloomui.com" title="BloomUI.com">
+        <img src="https://bloomui.s3.us-east-2.amazonaws.com/tokyo-logo.png" alt="Tokyo Free Black React Javascript Dashboard">
+    </a>
+</p>
+<h1 align="center">
+    <b>Tokyo Free Black React Javascript Dashboard</b>
+    <br>
+    <a href="https://twitter.com/intent/tweet?url=https://bloomui.com&text=I like this React admin dashboard">
+        <img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social" />
+    </a>
+</h1>
+<div align="center">
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![version](https://img.shields.io/badge/version-2.0.0-blue.svg)
+![license](https://img.shields.io/badge/license-MIT-blue.svg)
 
-## Available Scripts
+<a href="https://bloomui.com/product/tokyo-free-black-react-javascript-material-ui-admin-dashboard/"><img src="https://bloomui.s3.us-east-2.amazonaws.com/tokyo-free-black-react-javascript-material-ui-admin-dashboard.jpg" /></a>
+</div>
 
-In the project directory, you can run:
+<a href="https://bloomui.com/product/tokyo-free-black-react-javascript-material-ui-admin-dashboard/"><h3>Free Material-UI React Javascript Dashboard Template with Dark Color Scheme
 
-### `npm start`
+</h3></a>
+<p>
+Tokyo Free Black React Javascript Dashboard features an all dark color scheme which makes it stand out giving your projects a sleek unique look. It is built on top of Javascript, bootstrapped with Facebook’s create-react-app and all components are customized from Material-UI.</p>
+<p>
+It uses react-router v6 and the sidebar menu is dynamically built from a JSON array, making it easy to customize.
+</p>
+<p>
+There is also a Typescript free version available on <a href="https://bloomui.com">bloomui.com</a>
+</p>
+<p>
+We do regular updates so that all used dependencies stay up to date and relevant.
+</p>
+<p>
+This dark color scheme admin dashboard is licensed under a MIT License and it’s fully open source. You can use it in whatever project you want.
+</p>
+<p>
+The codebase is clean and simple to follow. If you want to customize the colors and styles all you have to do is edit a single variables file.
+</p>
+---
+<h3>Updrade to PRO</h3>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<p>If you need more components and features, we suggest reviewing the premium variant of this admin dashboard template: Tokyo Black Javascript Dashboard on <a href="https://bloomui.com">bloomui.com</a></p>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+<h2>
+    Quick Start
+</h2>
+<ol>
+    <li>Make sure you have the latest stable versions for Node.js and NPM installed</li>
+    <li>Clone repository: <code>git clone https://github.com/bloomui/tokyo-free-black-react-admin-dashboard-js.git</code></li>
+    <li>Install dependencies: Run <code>npm install</code> inside the project folder</li>
+    <li>Start dev server: After the install finishes, run <code>npm run start</code>. A browser window will open on http://localhost:3000 where you'll see the live preview</li>
+</ol>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<h2>
+    Technical Support
+</h2>
+<p>
+    You can open a support ticket by sending an email here: <a href="mailto:support@bloomui.freshdesk.com" title="Open Support Ticket">
+        support@bloomui.freshdesk.com
+    </a>
+</p>
