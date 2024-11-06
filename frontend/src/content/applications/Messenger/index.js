@@ -110,7 +110,6 @@ function ApplicationsMessenger() {
           </Scrollbar>
         </Sidebar> */}
         <ChatWindow>
-         
           <Box flex={1}>
             <Scrollbar>
               <ChatContent />

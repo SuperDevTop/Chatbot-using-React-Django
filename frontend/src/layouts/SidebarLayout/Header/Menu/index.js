@@ -77,15 +77,14 @@ function HeaderMenu() {
   return (
     <>
       <ListWrapper
-        sx={{
-          display: {
-            xs: 'none',
-            md: 'block'
-          }
-        }}
+      // sx={{
+      //   display: {
+      //     xs: 'none',
+      //     md: 'block'
+      //   }
+      // }}
       >
         <List disablePadding component={Box} display="flex">
-          
           <ListItem
             classes={{ root: 'MuiListItem-indicators' }}
             button
@@ -95,8 +94,13 @@ function HeaderMenu() {
             <ListItemText
               primaryTypographyProps={{ noWrap: true }}
               primary={
-                <Box display="flex" alignItems="center">
-                  ChatGPT 4o
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  color="black"
+                  marginBottom={2}
+                >
+                  <span style={{ fontSize: 20 }}>ChatGPT 4o</span>
                   <Box display="flex" alignItems="center" pl={0.3}>
                     <ExpandMoreTwoToneIcon fontSize="small" />
                   </Box>

@@ -1,5 +1,5 @@
 import {
-  Avatar,
+  // Avatar,
   Tooltip,
   IconButton,
   Box,
@@ -8,7 +8,7 @@ import {
   InputBase,
   useTheme
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import AttachFileTwoToneIcon from '@mui/icons-material/AttachFileTwoTone';
 import SendTwoToneIcon from '@mui/icons-material/SendTwoTone';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -40,10 +40,6 @@ function BottomBarContent() {
   //   avatar: '/static/images/avatars/1.jpg'
   // };
 
-  useEffect(() => {
-    console.log(messages);
-  }, [messages]);
-
   const sendOneMessage = async () => {
     if (!input.trim()) return;
 
@@ -72,10 +68,11 @@ function BottomBarContent() {
   return (
     <Box
       sx={{
-        background: theme.colors.alpha.white[50],
+        background: 'white',
         display: 'flex',
         alignItems: 'center',
-        p: 2
+        px: 2,
+        py: 1
       }}
     >
       <Box flexGrow={1} display="flex" alignItems="center">
@@ -92,6 +89,9 @@ function BottomBarContent() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={handleKeyPress}
+          sx={{
+            color: '#667085'
+          }}
         />
       </Box>
       <Box display="flex" alignItems="center">
@@ -106,7 +106,7 @@ function BottomBarContent() {
         <Input accept="image/*" id="messenger-upload-file" type="file" />
         <Tooltip arrow placement="top" title="Attach a file">
           <label htmlFor="messenger-upload-file">
-            <IconButton sx={{ mx: 1 }} color="primary" component="span">
+            <IconButton sx={{ mx: 1, color: 'text.third' }} component="span">
               <AttachFileTwoToneIcon fontSize="small" />
             </IconButton>
           </label>
@@ -115,6 +115,7 @@ function BottomBarContent() {
           startIcon={<SendTwoToneIcon />}
           variant="contained"
           onClick={sendOneMessage}
+          sx={{ color: 'text.third' }}
         >
           Send
         </Button>

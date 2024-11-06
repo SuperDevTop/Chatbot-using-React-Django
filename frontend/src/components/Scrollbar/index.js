@@ -9,6 +9,16 @@ const Scrollbar = ({ className, children, ...rest }) => {
   return (
     <Scrollbars
       autoHide
+      renderView={(props) => (
+        <div
+          {...props}
+          style={{
+            ...props.style,
+            overflowX: 'hidden',
+            marginBottom: 0
+          }}
+        />
+      )}
       renderThumbVertical={() => {
         return (
           <Box

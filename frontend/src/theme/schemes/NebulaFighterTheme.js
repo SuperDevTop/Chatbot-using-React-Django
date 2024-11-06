@@ -3,16 +3,20 @@ import { alpha, createTheme, darken } from '@mui/material';
 // import i18n from 'src/i18n/i18n';
 
 const themeColors = {
-  primary: '#8C7CF0',
+  // primary: '#8C7CF0',
+  primary: '#fffff',
   secondary: '#9EA4C1',
   success: '#57CA22',
   warning: '#FFA319',
   error: '#FF1943',
   info: '#33C2FF',
   black: '#CBCCD2',
-  white: '#111633',
-  primaryAlt: '#111633',
-  trueWhite: '#ffffff'
+  white: '#ffffff',
+  // white: '#111633',
+  // primaryAlt: '#111633',
+  primaryAlt: '#ffffff',
+  trueWhite: '#ffffff',
+  text: '#667085'
 };
 
 const colors = {
@@ -51,7 +55,8 @@ const colors = {
   },
   layout: {
     general: {
-      bodyBg: '#070C27'
+      // bodyBg: '#070C27'
+      bodyBg: '#E3E3E3'
     },
     sidebar: {
       background: themeColors.primaryAlt,
@@ -243,8 +248,9 @@ export const NebulaFighterTheme = createTheme({
     width: '290px'
   },
   header: {
-    height: '80px',
-    background: themeColors.primaryAlt,
+    height: '90px',
+    // background: themeColors.primaryAlt,
+    background: '#E3E3E3',
     boxShadow: '0px 1px 0px #272C48',
     textColor: colors.secondary.main
   },
@@ -292,7 +298,8 @@ export const NebulaFighterTheme = createTheme({
     text: {
       primary: colors.alpha.black[100],
       secondary: colors.alpha.black[70],
-      disabled: colors.alpha.black[50]
+      disabled: colors.alpha.black[50],
+      third: themeColors.text
     },
     background: {
       paper: colors.alpha.white[100],
@@ -325,7 +332,8 @@ export const NebulaFighterTheme = createTheme({
     MuiBackdrop: {
       styleOverrides: {
         root: {
-          backgroundColor: alpha(darken('#070C27', 0.5), 0.4),
+          // backgroundColor: alpha(darken('#070C27', 0.5), 0.4),
+          backgroundColor: alpha(darken('#ffffff', 0.5), 0.4),
           backdropFilter: 'blur(2px)',
 
           '&.MuiBackdrop-invisible': {
@@ -1143,6 +1151,7 @@ export const NebulaFighterTheme = createTheme({
     borderRadius: 10
   },
   typography: {
+    color: themeColors.text,
     fontFamily:
       '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
     h1: {

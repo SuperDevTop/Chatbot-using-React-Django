@@ -45,7 +45,7 @@ function Header() {
 
   return (
     <HeaderWrapper
-      display="flex"
+      // display="flex"
       alignItems="center"
       sx={{
         boxShadow:
@@ -60,18 +60,15 @@ function Header() {
               )}, 0px 5px 22px -4px ${alpha(
                 theme.colors.alpha.black[100],
                 0.1
-              )}`
+              )}`,
+        background: 'white',
+        display: {
+          xs: 'block',
+          sm: ' flex'
+        }
       }}
     >
-      <Stack
-        direction="row"
-        divider={<Divider orientation="vertical" flexItem />}
-        alignItems="center"
-        spacing={2}
-      >
-        <HeaderMenu />
-      </Stack>
-      <Box display="flex" alignItems="center">
+      <Box display="flex" alignItems="center" justifyContent="center">
         {/* <HeaderButtons /> */}
         {/* <HeaderUserbox /> */}
         <HeaderText />
@@ -93,6 +90,15 @@ function Header() {
           </Tooltip>
         </Box>
       </Box>
+      <Stack
+        direction="row"
+        divider={<Divider orientation="vertical" flexItem />}
+        alignItems="center"
+        justifyContent="center"
+        spacing={2}
+      >
+        <HeaderMenu />
+      </Stack>
     </HeaderWrapper>
   );
 }

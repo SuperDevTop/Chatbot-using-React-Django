@@ -13,22 +13,22 @@ import {
 } from 'date-fns';
 import ScheduleTwoToneIcon from '@mui/icons-material/ScheduleTwoTone';
 
-const DividerWrapper = styled(Divider)(
-  ({ theme }) => `
-      .MuiDivider-wrapper {
-        border-radius: ${theme.general.borderRadiusSm};
-        text-transform: none;
-        background: ${theme.palette.background.default};
-        font-size: ${theme.typography.pxToRem(13)};
-        color: ${theme.colors.alpha.black[50]};
-      }
-`
-);
+// const DividerWrapper = styled(Divider)(
+//   ({ theme }) => `
+//       .MuiDivider-wrapper {
+//         border-radius: ${theme.general.borderRadiusSm};
+//         text-transform: none;
+//         background: ${theme.palette.background.default};
+//         font-size: ${theme.typography.pxToRem(13)};
+//         color: ${theme.colors.alpha.black[50]};
+//       }
+// `
+// );
 
 const CardWrapperPrimary = styled(Card)(
   ({ theme }) => `
-      background: ${theme.colors.primary.main};
-      color: ${theme.palette.primary.contrastText};
+      background: #265A9E;
+      color: white;
       padding: ${theme.spacing(2)};
       border-radius: ${theme.general.borderRadiusXl};
       border-top-right-radius: ${theme.general.borderRadius};
@@ -39,8 +39,8 @@ const CardWrapperPrimary = styled(Card)(
 
 const CardWrapperSecondary = styled(Card)(
   ({ theme }) => `
-      background: ${theme.colors.alpha.black[10]};
-      color: ${theme.colors.alpha.black[100]};
+      background: white;
+      color: #667085;
       padding: ${theme.spacing(2)};
       border-radius: ${theme.general.borderRadiusXl};
       border-top-left-radius: ${theme.general.borderRadius};
@@ -73,7 +73,7 @@ function ChatContent() {
   }, [messages]);
 
   return (
-    <Box p={3}>
+    <Box sx={{ overflowY: 'auto' }}>
       {/* <DividerWrapper>
         {format(subDays(new Date(), 3), 'MMMM dd yyyy')}
       </DividerWrapper> */}
@@ -104,9 +104,9 @@ function ChatContent() {
               justifyContent="flex-start"
               ml={2}
             >
-              <CardWrapperSecondary>{message.text}</CardWrapperSecondary>
               <Typography
                 variant="subtitle1"
+                color="text.third"
                 sx={{
                   pt: 1,
                   display: 'flex',
@@ -115,14 +115,17 @@ function ChatContent() {
               >
                 <ScheduleTwoToneIcon
                   sx={{
-                    mr: 0.5
+                    mr: 0.5,
+                    color: 'text.third'
                   }}
                   fontSize="small"
                 />
-                {formatDistance(subHours(new Date(), 115), new Date(), {
+                {/* {formatDistance(subHours(new Date(), 115), new Date(), {
                   addSuffix: true
-                })}
+                })} */}
+                LiveChat {new Date().getHours()} : {new Date().getMinutes()}
               </Typography>
+              <CardWrapperSecondary>{message.text}</CardWrapperSecondary>
             </Box>
           </Box>
         ) : (
@@ -140,9 +143,9 @@ function ChatContent() {
               justifyContent="flex-end"
               mr={2}
             >
-              <CardWrapperPrimary>{message.text}</CardWrapperPrimary>
               <Typography
                 variant="subtitle1"
+                color="text.third"
                 sx={{
                   pt: 1,
                   display: 'flex',
@@ -155,10 +158,12 @@ function ChatContent() {
                   }}
                   fontSize="small"
                 />
-                {formatDistance(subHours(new Date(), 125), new Date(), {
+                {/* {formatDistance(subHours(new Date(), 125), new Date(), {
                   addSuffix: true
-                })}
+                })} */}
+                LiveChat {new Date().getHours()} : {new Date().getMinutes()}
               </Typography>
+              <CardWrapperPrimary>{message.text}</CardWrapperPrimary>
             </Box>
             {/* <Avatar
               variant="rounded"
@@ -173,6 +178,7 @@ function ChatContent() {
           </Box>
         )
       )}
+      <span ref={messagesEndRef} />
     </Box>
   );
 }
