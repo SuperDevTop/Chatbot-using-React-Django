@@ -8,14 +8,13 @@ from rest_framework import status
 # import openai
 from openai import OpenAI
 from django.conf import settings
+from django.http import StreamingHttpResponse
+import json
 
 # import logging
 # logger = logging.getLogger(__name__)
 
 from chatApi.chatLoggers import logger
-
-from django.http import StreamingHttpResponse
-
 
 # class ChatbotView_001(APIView):
 #     def get(self, request):
@@ -195,31 +194,34 @@ class ChatbotView_004(APIView):
         
         # all_messages = details['allMessages']
         formatted_messages = details['formattedMessages']
-        # print(all_messages)
-        # print(details)
-
 
         if not user_message:
             logger.warning("No message provided by the user.")
             return Response({'error': 'No message provided.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        client = OpenAI(
-            # This is the default and can be omitted
-            # api_key=os.environ.get("OPENAI_API_KEY"),
-            api_key=settings.OPENAI_API_KEY
-        )
+        client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
         try:
             response = client.chat.completions.create(
                 model="gpt-4o-mini",
-                # messages=[{'role': 'user', 'content': user_message}],
                 messages=formatted_messages,
+                stream=True
             )
-            # assistant_message = response['choices'][0]['message']['content']
-            assistant_message = response.choices[0].message.content
-            logger.info(f"AI reply: {assistant_message}")
-            return Response({'message': assistant_message}, status=status.HTTP_200_OK)
+
+            def stream_response():
+                for chunk in response:
+                    if chunk.choices[0].delta.content is not None:
+                        chunk_content = chunk.choices[0].delta.content
+                        yield json.dumps({"message": chunk_content}) + "\n"
+
+            return StreamingHttpResponse(
+                stream_response(),
+                content_type='application/json'
+            )
+
         except Exception as e:
-            print(f"Error: {e}")
             logger.error(f"Error in ChatbotView: {e}", exc_info=True)
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                {'error': str(e)}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

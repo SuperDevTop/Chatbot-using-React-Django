@@ -1,4 +1,4 @@
-import { SET_MESSAGES } from 'src/actions/types';
+import { SET_MESSAGES, ADD_SUB_MESSAGE } from 'src/actions/types';
 
 const initialState = {
   messages: []
@@ -12,6 +12,21 @@ const chatReducer = (state = initialState, action) => {
       return {
         ...state,
         messages: [...state.messages, newMessage]
+      };
+
+    case ADD_SUB_MESSAGE:
+      const { message } = action.payload;
+      const lastMessage = state.messages[state.messages.length - 1];
+      const updatedLastMessage = {
+        ...lastMessage,
+        text: lastMessage.text + message.text
+      };
+
+      // console.log([...state.messages.slice(0, -1), updatedLastMessage]);
+      
+      return {
+        ...state,
+        messages: [...state.messages.slice(0, -1), updatedLastMessage]
       };
 
     default:
