@@ -1,16 +1,18 @@
 import { Box, Avatar, Typography, Card, styled, Divider } from '@mui/material';
 import SmsIcon from '@mui/icons-material/Sms';
-import ChatIcon from '@mui/icons-material/Chat';
+// import ChatIcon from '@mui/icons-material/Chat';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  formatDistance,
-  format,
-  subDays,
-  subHours,
-  subMinutes
-} from 'date-fns';
+import ReactMarkdown from 'react-markdown';
+
+// import {
+//   formatDistance,
+//   format,
+//   subDays,
+//   subHours,
+//   subMinutes
+// } from 'date-fns';
 import ScheduleTwoToneIcon from '@mui/icons-material/ScheduleTwoTone';
 
 // const DividerWrapper = styled(Divider)(
@@ -29,11 +31,13 @@ const CardWrapperPrimary = styled(Card)(
   ({ theme }) => `
       background: #265A9E;
       color: white;
-      padding: ${theme.spacing(2)};
+      padding: ${theme.spacing(1)};
       border-radius: ${theme.general.borderRadiusXl};
       border-top-right-radius: ${theme.general.borderRadius};
       max-width: 380px;
-      display: inline-flex;
+      margin-bottom: 15px;
+      // display: inline-flex;
+
 `
 );
 
@@ -41,11 +45,13 @@ const CardWrapperSecondary = styled(Card)(
   ({ theme }) => `
       background: white;
       color: #667085;
-      padding: ${theme.spacing(2)};
+      padding: ${theme.spacing(1)};
       border-radius: ${theme.general.borderRadiusXl};
       border-top-left-radius: ${theme.general.borderRadius};
       max-width: 380px;
-      display: inline-flex;
+      margin-bottom: 15px;
+      // display: inline-flex;
+
 `
 );
 
@@ -58,9 +64,7 @@ function ChatContent() {
   // const [loading, setLoading] = useState(false);
 
   const messages = useSelector((state) => state.chat.messages);
-  // Ref to the chat container
-
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef(null); // Ref to the chat container
 
   // Function to scroll to the bottom of the messages
   const scrollToBottom = () => {
@@ -125,7 +129,9 @@ function ChatContent() {
                 })} */}
                 LiveChat {new Date().getHours()} : {new Date().getMinutes()}
               </Typography>
-              <CardWrapperSecondary>{message.text}</CardWrapperSecondary>
+              <CardWrapperSecondary>
+                <ReactMarkdown>{message.text}</ReactMarkdown>
+              </CardWrapperSecondary>
             </Box>
           </Box>
         ) : (
@@ -163,7 +169,9 @@ function ChatContent() {
                 })} */}
                 LiveChat {new Date().getHours()} : {new Date().getMinutes()}
               </Typography>
-              <CardWrapperPrimary>{message.text}</CardWrapperPrimary>
+              <CardWrapperPrimary>
+                <ReactMarkdown>{message.text}</ReactMarkdown>
+              </CardWrapperPrimary>
             </Box>
             {/* <Avatar
               variant="rounded"

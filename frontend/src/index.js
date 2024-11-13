@@ -1,4 +1,5 @@
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -21,7 +22,8 @@ const store = createStore(
   )
 );
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root')); // Create a root
+root.render(
   <HelmetProvider>
     <SidebarProvider>
       <BrowserRouter>
@@ -30,8 +32,19 @@ ReactDOM.render(
         </Provider>
       </BrowserRouter>
     </SidebarProvider>
-  </HelmetProvider>,
-  document.getElementById('root')
+  </HelmetProvider>
 );
+// ReactDOM.render(
+//   <HelmetProvider>
+//     <SidebarProvider>
+//       <BrowserRouter>
+//         <Provider store={store}>
+//           <App />
+//         </Provider>
+//       </BrowserRouter>
+//     </SidebarProvider>
+//   </HelmetProvider>,
+//   document.getElementById('root')
+// );
 
 serviceWorker.unregister();

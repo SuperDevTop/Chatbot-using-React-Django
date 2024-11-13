@@ -29,7 +29,7 @@ const RootWrapper = styled(Box)(
 const Sidebar = styled(Box)(
   ({ theme }) => `
         width: 300px;
-        background: ${theme.colors.alpha.white[100]};
+        background: ${theme.colors.alpha.black[30]};
         border-right: ${theme.colors.alpha.black[10]} solid 1px;
 `
 );
@@ -100,7 +100,7 @@ function ApplicationsMessenger() {
             <SidebarContent />
           </Scrollbar>
         </DrawerWrapperMobile> */}
-        {/* <Sidebar
+        <Sidebar
           sx={{
             display: { xs: 'none', lg: 'inline-block' }
           }}
@@ -108,7 +108,7 @@ function ApplicationsMessenger() {
           <Scrollbar>
             <SidebarContent />
           </Scrollbar>
-        </Sidebar> */}
+        </Sidebar>
         <ChatWindow>
           <Box flex={1}>
             <Scrollbar>

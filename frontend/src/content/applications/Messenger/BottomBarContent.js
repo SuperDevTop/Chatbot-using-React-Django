@@ -81,7 +81,7 @@ function BottomBarContent() {
           alt={user.name}
           src={user.avatar}
         /> */}
-        <ChatIcon sx={{ color: '#265a9e' }} fontSize="large" />
+        {/* <ChatIcon sx={{ color: '#265a9e' }} fontSize="large" /> */}
         <MessageInputWrapper
           autoFocus
           placeholder="Write a message"

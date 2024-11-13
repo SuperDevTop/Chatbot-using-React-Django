@@ -1,4 +1,9 @@
-import { SET_MESSAGES, ADD_SUB_MESSAGE } from './types';
+import {
+  SET_MESSAGES,
+  ADD_SUB_MESSAGE,
+  SET_INCREASE_CHAT_ID,
+  SET_ACTIVECHAT_ID
+} from './types';
 
 export const setMessages = (data) => async (dispatch) => {
   dispatch({
@@ -69,4 +74,19 @@ export const sendMessage = (data) => async (dispatch) => {
       }
     });
   }
+};
+
+export const increaseChatId = () => (dispatch) => {
+  dispatch({
+    type: SET_INCREASE_CHAT_ID
+  });
+};
+
+export const setActiveChatId = (data) => (dispatch) => {
+  const { chatId } = data;
+
+  dispatch({
+    type: SET_ACTIVECHAT_ID,
+    payload: { chatId }
+  });
 };

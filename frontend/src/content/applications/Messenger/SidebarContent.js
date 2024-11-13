@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Box,
   Typography,
@@ -24,10 +24,14 @@ import {
 import { formatDistance, subMinutes, subHours } from 'date-fns';
 import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
 import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
+import AddIcon from '@mui/icons-material/Add';
 import Label from 'src/components/Label';
 import CheckTwoToneIcon from '@mui/icons-material/CheckTwoTone';
 import AlarmTwoToneIcon from '@mui/icons-material/AlarmTwoTone';
 import { Link as RouterLink } from 'react-router-dom';
+
+import { increaseChatId, setActiveChatId } from 'src/actions/chatAction';
+import { useDispatch, useSelector } from 'react-redux';
 
 const AvatarSuccess = styled(Avatar)(
   ({ theme }) => `
@@ -52,6 +56,8 @@ const MeetingBox = styled(Box)(
 const RootWrapper = styled(Box)(
   ({ theme }) => `
         padding: ${theme.spacing(2.5)};
+        color: black;
+        border-top: solid 1px ${theme.colors.alpha.black[50]};
   `
 );
 
@@ -59,6 +65,10 @@ const ListItemWrapper = styled(ListItemButton)(
   ({ theme }) => `
         &.MuiButtonBase-root {
             margin: ${theme.spacing(1)} 0;
+        }
+
+        &.Mui-selected {
+            background: ${theme.colors.alpha.white[50]};
         }
   `
 );
@@ -77,7 +87,8 @@ const TabsContainerWrapper = styled(Box)(
                 padding: 0;
                 margin-right: ${theme.spacing(3)};
                 font-size: ${theme.typography.pxToRem(16)};
-                color: ${theme.colors.alpha.black[50]};
+                // color: ${theme.colors.alpha.black[50]};
+                color: black;
 
                 .MuiTouchRipple-root {
                     display: none;
@@ -86,13 +97,16 @@ const TabsContainerWrapper = styled(Box)(
 
             &.Mui-selected:hover,
             &.Mui-selected {
-                color: ${theme.colors.alpha.black[100]};
+                color: ${theme.colors.alpha.black[0]};
+                background: green;
+                // color: black;
             }
         }
   `
 );
 
 function SidebarContent() {
+  const dispatch = useDispatch();
   const user = {
     name: 'Catherine Pike',
     avatar: '/static/images/avatars/1.jpg',
@@ -102,6 +116,8 @@ function SidebarContent() {
   const [state, setState] = useState({
     invisible: true
   });
+  const chatHistory = useSelector((state) => state.chat.chatHistory);
+  const activeChatId = useSelector((state) => state.chat.activeChatId);
 
   const handleChange = (event) => {
     setState({
@@ -122,9 +138,18 @@ function SidebarContent() {
     setCurrentTab(value);
   };
 
+  const handleNewChat = () => {
+    dispatch(increaseChatId());
+  };
+
+  const onSelectChat = (chatId) => {
+    const data = { chatId: chatId };
+    dispatch(setActiveChatId(data));
+  };
+
   return (
     <RootWrapper>
-      <Box display="flex" alignItems="flex-start">
+      {/* <Box display="flex" alignItems="flex-start">
         <Avatar alt={user.name} src={user.avatar} />
         <Box
           sx={{
@@ -168,9 +193,9 @@ function SidebarContent() {
             label="Invisible"
           />
         </Box>
-      </Box>
+      </Box> */}
 
-      <TextField
+      {/* <TextField
         sx={{
           mt: 2,
           mb: 1
@@ -185,9 +210,9 @@ function SidebarContent() {
           )
         }}
         placeholder="Search..."
-      />
+      /> */}
 
-      <Typography
+      {/* <Typography
         sx={{
           mb: 1,
           mt: 2
@@ -195,8 +220,16 @@ function SidebarContent() {
         variant="h3"
       >
         Chats
-      </Typography>
-
+      </Typography> */}
+      <Button
+        sx={{ textAlign: 'center', background: 'white', width: '100%', mb: 2 }}
+        startIcon={<AddIcon />}
+        onClick={() => {
+          handleNewChat();
+        }}
+      >
+        New Chat
+      </Button>
       <TabsContainerWrapper>
         <Tabs
           onChange={handleTabsChange}
@@ -206,19 +239,25 @@ function SidebarContent() {
           textColor="primary"
           indicatorColor="primary"
         >
-          {tabs.map((tab) => (
-            <Tab key={tab.value} label={tab.label} value={tab.value} />
-          ))}
+          {/* {tabs.map((tab) => ( */}
+          <Tab label={'today'} value={'today'} />
+          {/* ))} */}
         </Tabs>
       </TabsContainerWrapper>
 
       <Box mt={2}>
-        {currentTab === 'all' && (
-          <List disablePadding component="div">
-            <ListItemWrapper selected>
-              <ListItemAvatar>
-                <Avatar src="/static/images/avatars/1.jpg" />
-              </ListItemAvatar>
+        <List disablePadding component="div">
+          {chatHistory.map((chat, index) => (
+            <ListItemWrapper
+              key={chat.id}
+              selected={index == activeChatId}
+              onClick={() => {
+                onSelectChat(chat.id);
+              }}
+            >
+              {/* <ListItemAvatar>
+              <Avatar src="/static/images/avatars/3.jpg" />
+            </ListItemAvatar> */}
               <ListItemText
                 sx={{
                   mr: 1
@@ -229,85 +268,45 @@ function SidebarContent() {
                   noWrap: true
                 }}
                 secondaryTypographyProps={{
-                  color: 'textSecondary',
+                  color: 'black',
                   noWrap: true
                 }}
-                primary="Zain Baptista"
-                secondary="Hey there, how are you today? Is it ok if I call you?"
-              />
-              <Label color="primary">
-                <b>2</b>
-              </Label>
-            </ListItemWrapper>
-            <ListItemWrapper>
-              <ListItemAvatar>
-                <Avatar src="/static/images/avatars/2.jpg" />
-              </ListItemAvatar>
-              <ListItemText
-                sx={{
-                  mr: 1
-                }}
-                primaryTypographyProps={{
-                  color: 'textPrimary',
-                  variant: 'h5',
-                  noWrap: true
-                }}
-                secondaryTypographyProps={{
-                  color: 'textSecondary',
-                  noWrap: true
-                }}
-                primary="Kierra Herwitz"
-                secondary="Hi! Did you manage to send me those documents"
+                // primary="Craig Vaccaro"
+                secondary={
+                  new Date(chat.date).toLocaleString() + `- Chat ${chat.id}`
+                }
               />
             </ListItemWrapper>
-            <ListItemWrapper>
-              <ListItemAvatar>
-                <Avatar src="/static/images/avatars/3.jpg" />
-              </ListItemAvatar>
-              <ListItemText
-                sx={{
-                  mr: 1
-                }}
-                primaryTypographyProps={{
-                  color: 'textPrimary',
-                  variant: 'h5',
-                  noWrap: true
-                }}
-                secondaryTypographyProps={{
-                  color: 'textSecondary',
-                  noWrap: true
-                }}
-                primary="Craig Vaccaro"
-                secondary="Ola, I still haven't received the program schedule"
-              />
-            </ListItemWrapper>
-            <ListItemWrapper>
-              <ListItemAvatar>
-                <Avatar src="/static/images/avatars/4.jpg" />
-              </ListItemAvatar>
-              <ListItemText
-                sx={{
-                  mr: 1
-                }}
-                primaryTypographyProps={{
-                  color: 'textPrimary',
-                  variant: 'h5',
-                  noWrap: true
-                }}
-                secondaryTypographyProps={{
-                  color: 'textSecondary',
-                  noWrap: true
-                }}
-                primary="Adison Press"
-                secondary="I recently did some buying on Amazon and now I'm stuck"
-              />
-              <Label color="primary">
-                <b>8</b>
-              </Label>
-            </ListItemWrapper>
-          </List>
-        )}
-        {currentTab === 'unread' && (
+          ))}
+          {/* <ListItemWrapper selected> */}
+          {/* <ListItemAvatar>
+              <Avatar src="/static/images/avatars/1.jpg" />
+            </ListItemAvatar> */}
+          {/* <ListItemText
+              sx={{
+                mr: 1
+              }}
+              primaryTypographyProps={{ */}
+          {/* // color: 'textPrimary',
+                color: 'black',
+                variant: 'h5',
+                noWrap: true
+              }}
+              secondaryTypographyProps={{ */}
+          {/* // color: 'textSecondary',
+                color: 'black',
+                noWrap: true
+              }}
+              // primary="Zain Baptista"
+              secondary="Hey there, how are you today? Is it ok if I call you?" */}
+          {/* /> */}
+          {/* <Label color="primary">
+              <b>2</b>
+            </Label> */}
+          {/* </ListItemWrapper> */}
+        </List>
+
+        {/* {currentTab === 'unread' && (
           <List disablePadding component="div">
             <ListItemWrapper>
               <ListItemAvatar>
@@ -384,9 +383,9 @@ function SidebarContent() {
               }}
             />
           </Box>
-        )}
+        )} */}
       </Box>
-      <Box display="flex" pb={1} mt={4} alignItems="center">
+      {/* <Box display="flex" pb={1} mt={4} alignItems="center">
         <Typography
           sx={{
             mr: 1
@@ -521,7 +520,7 @@ function SidebarContent() {
             Attend
           </Button>
         </Box>
-      </MeetingBox>
+      </MeetingBox> */}
     </RootWrapper>
   );
 }
