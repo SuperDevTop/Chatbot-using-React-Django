@@ -21,6 +21,11 @@ const MessageInputWrapper = styled(InputBase)(
     font-size: ${theme.typography.pxToRem(18)};
     padding: ${theme.spacing(1)};
     width: 100%;
+    max-height: ${theme.typography.pxToRem(
+      162
+    )}; // Approximately 9 lines (18px * 9)
+    // overflow-y: auto;
+    line-height: 1;
 `
 );
 
@@ -58,8 +63,13 @@ function BottomBarContent() {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      sendOneMessage();
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (input.trim()) {
+        // Check if input is not empty
+        sendOneMessage(); // Call your send message function
+        setInput(''); // Clear input after sending
+      }
     }
   };
 
@@ -86,31 +96,37 @@ function BottomBarContent() {
           autoFocus
           placeholder="Write a message"
           fullWidth
+          multiline
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyPress} // Changed from onKeyPress to onKeyDown
+          maxRows={9}
           sx={{
-            color: '#667085'
+            color: '#667085',
+            '& .MuiInputBase-input': {
+              maxHeight: '162px', // Same as wrapper max-height
+              overflowY: 'auto'
+            }
           }}
         />
       </Box>
       <Box display="flex" alignItems="center">
-        <Tooltip arrow placement="top" title="Choose an emoji">
+        {/* <Tooltip arrow placement="top" title="Choose an emoji">
           <IconButton
             sx={{ fontSize: theme.typography.pxToRem(16) }}
             color="primary"
           >
             😀
           </IconButton>
-        </Tooltip>
-        <Input accept="image/*" id="messenger-upload-file" type="file" />
+        </Tooltip> */}
+        {/* <Input accept="image/*" id="messenger-upload-file" type="file" />
         <Tooltip arrow placement="top" title="Attach a file">
           <label htmlFor="messenger-upload-file">
             <IconButton sx={{ mx: 1, color: 'text.third' }} component="span">
               <AttachFileTwoToneIcon fontSize="small" />
             </IconButton>
           </label>
-        </Tooltip>
+        </Tooltip> */}
         <Button
           startIcon={<SendTwoToneIcon />}
           variant="contained"

@@ -1,57 +1,16 @@
-import { useEffect, useState } from 'react';
 import {
   Box,
-  Typography,
-  FormControlLabel,
-  Switch,
-  Tabs,
-  Tab,
-  TextField,
-  IconButton,
-  InputAdornment,
-  Avatar,
   List,
   Button,
-  Tooltip,
-  Divider,
-  AvatarGroup,
   ListItemButton,
-  ListItemAvatar,
   ListItemText,
-  lighten,
-  styled
+  styled,
+  Typography
 } from '@mui/material';
-import { formatDistance, subMinutes, subHours } from 'date-fns';
-import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
-import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
 import AddIcon from '@mui/icons-material/Add';
-import Label from 'src/components/Label';
-import CheckTwoToneIcon from '@mui/icons-material/CheckTwoTone';
-import AlarmTwoToneIcon from '@mui/icons-material/AlarmTwoTone';
-import { Link as RouterLink } from 'react-router-dom';
 
 import { increaseChatId, setActiveChatId } from 'src/actions/chatAction';
 import { useDispatch, useSelector } from 'react-redux';
-
-const AvatarSuccess = styled(Avatar)(
-  ({ theme }) => `
-          background-color: ${theme.colors.success.lighter};
-          color: ${theme.colors.success.main};
-          width: ${theme.spacing(8)};
-          height: ${theme.spacing(8)};
-          margin-left: auto;
-          margin-right: auto;
-    `
-);
-
-const MeetingBox = styled(Box)(
-  ({ theme }) => `
-          background-color: ${lighten(theme.colors.alpha.black[10], 0.5)};
-          margin: ${theme.spacing(2)} 0;
-          border-radius: ${theme.general.borderRadius};
-          padding: ${theme.spacing(2)};
-    `
-);
 
 const RootWrapper = styled(Box)(
   ({ theme }) => `
@@ -73,70 +32,10 @@ const ListItemWrapper = styled(ListItemButton)(
   `
 );
 
-const TabsContainerWrapper = styled(Box)(
-  ({ theme }) => `
-        .MuiTabs-indicator {
-            min-height: 4px;
-            height: 4px;
-            box-shadow: none;
-            border: 0;
-        }
-
-        .MuiTab-root {
-            &.MuiButtonBase-root {
-                padding: 0;
-                margin-right: ${theme.spacing(3)};
-                font-size: ${theme.typography.pxToRem(16)};
-                // color: ${theme.colors.alpha.black[50]};
-                color: black;
-
-                .MuiTouchRipple-root {
-                    display: none;
-                }
-            }
-
-            &.Mui-selected:hover,
-            &.Mui-selected {
-                color: ${theme.colors.alpha.black[0]};
-                background: green;
-                // color: black;
-            }
-        }
-  `
-);
-
 function SidebarContent() {
   const dispatch = useDispatch();
-  const user = {
-    name: 'Catherine Pike',
-    avatar: '/static/images/avatars/1.jpg',
-    jobtitle: 'Software Developer'
-  };
-
-  const [state, setState] = useState({
-    invisible: true
-  });
   const chatHistory = useSelector((state) => state.chat.chatHistory);
   const activeChatId = useSelector((state) => state.chat.activeChatId);
-
-  const handleChange = (event) => {
-    setState({
-      ...state,
-      [event.target.name]: event.target.checked
-    });
-  };
-
-  const [currentTab, setCurrentTab] = useState('all');
-
-  const tabs = [
-    { value: 'all', label: 'All' },
-    { value: 'unread', label: 'Unread' },
-    { value: 'archived', label: 'Archived' }
-  ];
-
-  const handleTabsChange = (event, value) => {
-    setCurrentTab(value);
-  };
 
   const handleNewChat = () => {
     dispatch(increaseChatId());
@@ -147,380 +46,100 @@ function SidebarContent() {
     dispatch(setActiveChatId(data));
   };
 
+  const groupChatsByDay = (chats) => {
+    const grouped = chats.reduce((groups, chat) => {
+      const date = new Date(chat.date);
+      const today = new Date();
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+
+      let dateKey;
+
+      if (date.toDateString() === today.toDateString()) {
+        dateKey = 'Today';
+      } else if (date.toDateString() === yesterday.toDateString()) {
+        dateKey = 'Yesterday';
+      } else {
+        dateKey = date.toLocaleDateString();
+      }
+
+      if (!groups[dateKey]) {
+        groups[dateKey] = [];
+      }
+      groups[dateKey].push(chat);
+      return groups;
+    }, {});
+
+    // Sort dates in reverse chronological order
+    const sortedDates = Object.entries(grouped).sort((a, b) => {
+      if (a[0] === 'Today') return -1;
+      if (b[0] === 'Today') return 1;
+      if (a[0] === 'Yesterday') return -1;
+      if (b[0] === 'Yesterday') return 1;
+
+      const dateA = new Date(a[0]);
+      const dateB = new Date(b[0]);
+      return dateB - dateA;
+    });
+
+    return Object.fromEntries(sortedDates);
+  };
+
+  const groupedChats = groupChatsByDay(chatHistory);
+
   return (
     <RootWrapper>
-      {/* <Box display="flex" alignItems="flex-start">
-        <Avatar alt={user.name} src={user.avatar} />
-        <Box
-          sx={{
-            ml: 1.5,
-            flex: 1
-          }}
-        >
-          <Box
-            display="flex"
-            alignItems="flex-start"
-            justifyContent="space-between"
-          >
-            <Box>
-              <Typography variant="h5" noWrap>
-                {user.name}
-              </Typography>
-              <Typography variant="subtitle1" noWrap>
-                {user.jobtitle}
-              </Typography>
-            </Box>
-            <IconButton
-              sx={{
-                p: 1
-              }}
-              size="small"
-              color="primary"
-            >
-              <SettingsTwoToneIcon fontSize="small" />
-            </IconButton>
-          </Box>
-
-          <FormControlLabel
-            control={
-              <Switch
-                checked={state.invisible}
-                onChange={handleChange}
-                name="invisible"
-                color="primary"
-              />
-            }
-            label="Invisible"
-          />
-        </Box>
-      </Box> */}
-
-      {/* <TextField
-        sx={{
-          mt: 2,
-          mb: 1
-        }}
-        size="small"
-        fullWidth
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchTwoToneIcon />
-            </InputAdornment>
-          )
-        }}
-        placeholder="Search..."
-      /> */}
-
-      {/* <Typography
-        sx={{
-          mb: 1,
-          mt: 2
-        }}
-        variant="h3"
-      >
-        Chats
-      </Typography> */}
       <Button
         sx={{ textAlign: 'center', background: 'white', width: '100%', mb: 2 }}
         startIcon={<AddIcon />}
-        onClick={() => {
-          handleNewChat();
-        }}
+        onClick={handleNewChat}
       >
         New Chat
       </Button>
-      <TabsContainerWrapper>
-        <Tabs
-          onChange={handleTabsChange}
-          value={currentTab}
-          variant="scrollable"
-          scrollButtons="auto"
-          textColor="primary"
-          indicatorColor="primary"
-        >
-          {/* {tabs.map((tab) => ( */}
-          <Tab label={'today'} value={'today'} />
-          {/* ))} */}
-        </Tabs>
-      </TabsContainerWrapper>
 
       <Box mt={2}>
-        <List disablePadding component="div">
-          {chatHistory.map((chat, index) => (
-            <ListItemWrapper
-              key={chat.id}
-              selected={index == activeChatId}
-              onClick={() => {
-                onSelectChat(chat.id);
-              }}
-            >
-              {/* <ListItemAvatar>
-              <Avatar src="/static/images/avatars/3.jpg" />
-            </ListItemAvatar> */}
-              <ListItemText
-                sx={{
-                  mr: 1
-                }}
-                primaryTypographyProps={{
-                  color: 'textPrimary',
-                  variant: 'h5',
-                  noWrap: true
-                }}
-                secondaryTypographyProps={{
-                  color: 'black',
-                  noWrap: true
-                }}
-                // primary="Craig Vaccaro"
-                secondary={
-                  new Date(chat.date).toLocaleString() + `- Chat ${chat.id}`
-                }
-              />
-            </ListItemWrapper>
-          ))}
-          {/* <ListItemWrapper selected> */}
-          {/* <ListItemAvatar>
-              <Avatar src="/static/images/avatars/1.jpg" />
-            </ListItemAvatar> */}
-          {/* <ListItemText
+        {Object.entries(groupedChats).map(([date, chats]) => (
+          <Box key={date}>
+            <Typography
+              variant="subtitle2"
               sx={{
-                mr: 1
-              }}
-              primaryTypographyProps={{ */}
-          {/* // color: 'textPrimary',
+                py: 1,
+                px: 2,
+                backgroundColor: (theme) => theme.colors.alpha.black[5],
                 color: 'black',
-                variant: 'h5',
-                noWrap: true
+                fontWeight: 800
               }}
-              secondaryTypographyProps={{ */}
-          {/* // color: 'textSecondary',
-                color: 'black',
-                noWrap: true
-              }}
-              // primary="Zain Baptista"
-              secondary="Hey there, how are you today? Is it ok if I call you?" */}
-          {/* /> */}
-          {/* <Label color="primary">
-              <b>2</b>
-            </Label> */}
-          {/* </ListItemWrapper> */}
-        </List>
-
-        {/* {currentTab === 'unread' && (
-          <List disablePadding component="div">
-            <ListItemWrapper>
-              <ListItemAvatar>
-                <Avatar src="/static/images/avatars/1.jpg" />
-              </ListItemAvatar>
-              <ListItemText
-                sx={{
-                  mr: 1
-                }}
-                primaryTypographyProps={{
-                  color: 'textPrimary',
-                  variant: 'h5',
-                  noWrap: true
-                }}
-                secondaryTypographyProps={{
-                  color: 'textSecondary',
-                  noWrap: true
-                }}
-                primary="Zain Baptista"
-                secondary="Hey there, how are you today? Is it ok if I call you?"
-              />
-              <Label color="primary">
-                <b>2</b>
-              </Label>
-            </ListItemWrapper>
-            <ListItemWrapper>
-              <ListItemAvatar>
-                <Avatar src="/static/images/avatars/4.jpg" />
-              </ListItemAvatar>
-              <ListItemText
-                sx={{
-                  mr: 1
-                }}
-                primaryTypographyProps={{
-                  color: 'textPrimary',
-                  variant: 'h5',
-                  noWrap: true
-                }}
-                secondaryTypographyProps={{
-                  color: 'textSecondary',
-                  noWrap: true
-                }}
-                primary="Adison Press"
-                secondary="I recently did some buying on Amazon and now I'm stuck"
-              />
-              <Label color="primary">
-                <b>8</b>
-              </Label>
-            </ListItemWrapper>
-          </List>
-        )}
-        {currentTab === 'archived' && (
-          <Box pb={3}>
-            <Divider
-              sx={{
-                mb: 3
-              }}
-            />
-            <AvatarSuccess>
-              <CheckTwoToneIcon />
-            </AvatarSuccess>
-            <Typography
-              sx={{
-                mt: 2,
-                textAlign: 'center'
-              }}
-              variant="subtitle2"
             >
-              Hurray! There are no archived chats!
+              {date}
             </Typography>
-            <Divider
-              sx={{
-                mt: 3
-              }}
-            />
+            <List disablePadding component="div">
+              {chats.map((chat) => (
+                <ListItemWrapper
+                  key={chat.id}
+                  selected={chat.id === activeChatId}
+                  onClick={() => onSelectChat(chat.id)}
+                >
+                  <ListItemText
+                    sx={{ mr: 1 }}
+                    primaryTypographyProps={{
+                      color: 'textPrimary',
+                      variant: 'h5',
+                      noWrap: true
+                    }}
+                    secondaryTypographyProps={{
+                      color: 'black',
+                      noWrap: true
+                    }}
+                    secondary={`${new Date(
+                      chat.date
+                    ).toLocaleTimeString()} - Chat ${chat.id}`}
+                  />
+                </ListItemWrapper>
+              ))}
+            </List>
           </Box>
-        )} */}
+        ))}
       </Box>
-      {/* <Box display="flex" pb={1} mt={4} alignItems="center">
-        <Typography
-          sx={{
-            mr: 1
-          }}
-          variant="h3"
-        >
-          Meetings
-        </Typography>
-        <Label color="success">
-          <b>2</b>
-        </Label>
-      </Box>
-      <MeetingBox>
-        <Typography variant="h4">Daily Design Meeting</Typography>
-
-        <Box py={3} display="flex" alignItems="flex-start">
-          <AlarmTwoToneIcon />
-          <Box pl={1}>
-            <Typography
-              variant="subtitle2"
-              sx={{
-                lineHeight: 1
-              }}
-              color="text.primary"
-            >
-              10:00 - 11:30
-            </Typography>
-            <Typography variant="subtitle1">
-              {formatDistance(subMinutes(new Date(), 12), new Date(), {
-                addSuffix: true
-              })}
-            </Typography>
-          </Box>
-        </Box>
-        <Box display="flex" alignItems="center" justifyContent="space-between">
-          <AvatarGroup>
-            <Tooltip arrow title="View profile for Remy Sharp">
-              <Avatar
-                sx={{
-                  width: 28,
-                  height: 28
-                }}
-                component={RouterLink}
-                to="#"
-                alt="Remy Sharp"
-                src="/static/images/avatars/1.jpg"
-              />
-            </Tooltip>
-            <Tooltip arrow title="View profile for Travis Howard">
-              <Avatar
-                sx={{
-                  width: 28,
-                  height: 28
-                }}
-                component={RouterLink}
-                to="#"
-                alt="Travis Howard"
-                src="/static/images/avatars/2.jpg"
-              />
-            </Tooltip>
-            <Tooltip arrow title="View profile for Craig Vaccaro">
-              <Avatar
-                sx={{
-                  width: 28,
-                  height: 28
-                }}
-                component={RouterLink}
-                to="#"
-                alt="Craig Vaccaro"
-                src="/static/images/avatars/3.jpg"
-              />
-            </Tooltip>
-          </AvatarGroup>
-
-          <Button variant="contained" size="small">
-            Attend
-          </Button>
-        </Box>
-      </MeetingBox>
-
-      <MeetingBox>
-        <Typography variant="h4">Investors Council Meeting</Typography>
-
-        <Box py={3} display="flex" alignItems="flex-start">
-          <AlarmTwoToneIcon />
-          <Box pl={1}>
-            <Typography
-              variant="subtitle2"
-              sx={{
-                lineHeight: 1
-              }}
-              color="text.primary"
-            >
-              14:30 - 16:15
-            </Typography>
-            <Typography variant="subtitle1">
-              {formatDistance(subHours(new Date(), 4), new Date(), {
-                addSuffix: true
-              })}
-            </Typography>
-          </Box>
-        </Box>
-        <Box display="flex" alignItems="center" justifyContent="space-between">
-          <AvatarGroup>
-            <Tooltip arrow title="View profile for Travis Howard">
-              <Avatar
-                sx={{
-                  width: 28,
-                  height: 28
-                }}
-                component={RouterLink}
-                to="#"
-                alt="Travis Howard"
-                src="/static/images/avatars/4.jpg"
-              />
-            </Tooltip>
-            <Tooltip arrow title="View profile for Craig Vaccaro">
-              <Avatar
-                sx={{
-                  width: 28,
-                  height: 28
-                }}
-                component={RouterLink}
-                to="#"
-                alt="Craig Vaccaro"
-                src="/static/images/avatars/5.jpg"
-              />
-            </Tooltip>
-          </AvatarGroup>
-
-          <Button variant="contained" size="small">
-            Attend
-          </Button>
-        </Box>
-      </MeetingBox> */}
     </RootWrapper>
   );
 }
