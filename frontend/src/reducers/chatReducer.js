@@ -2,7 +2,8 @@ import {
   SET_MESSAGES,
   ADD_SUB_MESSAGE,
   SET_INCREASE_CHAT_ID,
-  SET_ACTIVECHAT_ID
+  SET_ACTIVECHAT_ID,
+  DELETE_CHAT
 } from 'src/actions/types';
 
 const initialState = {
@@ -115,7 +116,8 @@ const chatReducer = (state = initialState, action) => {
       return {
         ...state,
         activeChatId: newChatId,
-        messages: []
+        messages: [],
+        chatHistory: updatedChatHistory
       };
 
     case SET_ACTIVECHAT_ID:
@@ -125,6 +127,17 @@ const chatReducer = (state = initialState, action) => {
         ...state,
         activeChatId: action.payload.chatId,
         messages: chatHistory[chatId].messages
+      };
+
+    case DELETE_CHAT:
+      const { chat_id } = action.payload;
+      const updated_chatHistory = state.chatHistory.filter(
+        (chat) => chat.id !== chat_id
+      );
+
+      return {
+        ...state,
+        chatHistory: updated_chatHistory
       };
 
     default:

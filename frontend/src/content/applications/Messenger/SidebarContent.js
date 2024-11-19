@@ -8,8 +8,13 @@ import {
   Typography
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-import { increaseChatId, setActiveChatId } from 'src/actions/chatAction';
+import {
+  increaseChatId,
+  setActiveChatId,
+  deleteChat
+} from 'src/actions/chatAction';
 import { useDispatch, useSelector } from 'react-redux';
 
 const RootWrapper = styled(Box)(
@@ -87,6 +92,15 @@ function SidebarContent() {
 
   const groupedChats = groupChatsByDay(chatHistory);
 
+  const onDeleteChat = (chat_id) => {
+    const answer = window.confirm('Are you sure you want to delete this chat?');
+
+    if (answer) {
+      const data = { chat_id };
+      dispatch(deleteChat(data));
+    }
+  };
+
   return (
     <RootWrapper>
       <Button
@@ -134,6 +148,7 @@ function SidebarContent() {
                       chat.date
                     ).toLocaleTimeString()} - Chat ${chat.id}`}
                   />
+                  <DeleteIcon onClick={() => onDeleteChat(chat.id)} />
                 </ListItemWrapper>
               ))}
             </List>

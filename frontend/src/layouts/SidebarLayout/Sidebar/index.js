@@ -10,9 +10,9 @@ import {
   styled,
   Divider,
   useTheme,
-  Button,
+  // Button,
   // lighten,
-  darken,
+  // darken
   // Typography
 } from '@mui/material';
 
@@ -25,7 +25,7 @@ const SidebarWrapper = styled(Box)(
         position: relative;
         z-index: 7;
         height: 100%;
-        padding-bottom: 68px;
+        // padding-bottom: 68px;
 `
 );
 
@@ -38,7 +38,8 @@ function Sidebar() {
     <>
       <Drawer
         sx={{
-          boxShadow: `${theme.sidebar.boxShadow}`
+          // boxShadow: `${theme.sidebar.boxShadow}`,
+          background: `${theme.colors.alpha.black[30]}`
         }}
         anchor={theme.direction === 'rtl' ? 'right' : 'left'}
         open={sidebarToggle}
@@ -48,10 +49,11 @@ function Sidebar() {
       >
         <SidebarWrapper
           sx={{
-            background:
-              theme.palette.mode === 'dark'
-                ? theme.colors.alpha.white[100]
-                : darken(theme.colors.alpha.black[100], 0.5)
+            // background:
+            //   theme.palette.mode === 'dark'
+            //     ? theme.colors.alpha.white[100]
+            //     : darken(theme.colors.alpha.black[100], 0.5)
+            background: `${theme.colors.alpha.black[30]}`
           }}
         >
           {/* <Scrollbar> */}
